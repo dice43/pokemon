@@ -1,13 +1,28 @@
 import requests
+import pandas as pd
+import sqlalchemy as db
+
 
 validInput = False
 while not validInput:
   starter = input("Please enter the pokemon that you choose: ")
   url = 'https://pokeapi.co/api/v2/pokemon/' + starter.lower()
   response = requests.get(url)
+  pokemonData = response.json()
 
+  '''
+  pandas = pd.DataFrame.from_dict(normal)
+  #SQL
+  engine = db.create_engine('sqlite:///pokemon.db')
+  pandas.to_sql('starters', con=engine, if_exists='replace', index=False)
+  query_result = engine.execute("SELECT * FROM table;").fetchall()
+  print(pd.DataFrame(query_result))
+  '''
+
+  #Trys to convert pokemon dictionary into json if it fails the pokemon selected was invalid
   try:
     pokemonData = response.json()
+
     validInput = True
   except:
     print("That is not a pokemon that exists in the Nine regions")
